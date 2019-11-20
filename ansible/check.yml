@@ -1,0 +1,18 @@
+---
+- hosts: workers
+  become: true
+  tasks:
+    - name: docker check
+      shell: systemctl status docker
+      register: out
+    - debug: msg="{{ out.stdout_lines }}"
+
+    - name: ntp check
+      command: /usr/sbin/ntpq -p
+      register: out1
+    - debug: msg="{{ out1.stdout_lines }}"
+
+    - name: date check
+      command: /usr/bin/date
+      register: out2
+    - debug: msg="{{ out2.stdout_lines }}"

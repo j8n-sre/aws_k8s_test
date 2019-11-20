@@ -1,0 +1,51 @@
+---
+- hosts: workers
+  become: true
+  tasks:
+    - name: Yum Update
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Docker Install
+      yum:
+        name: docker
+        state: installed
+
+    - name: Docker Start
+      systemd:
+        state: started
+        name: docker
+        enabled: yes
+
+    - name: Ntpd Install
+      yum:
+        name: ntp
+        state: installed
+
+    - name: Delete ntp.conf
+      file:
+        state: absent
+        path: /etc/ntp.conf
+
+    - name: NTP & Timezone config
+      file:
+        state: touch
+        path: /etc/ntp.conf
+
+    - name: NTP Server
+      shell: echo "server 172.31.30.10" > /etc/ntp.conf
+
+    - name: NTP Daemon Start
+      systemd:
+        state: started
+        name: ntpd
+        enabled: yes
+
+    - name: Timezone Config
+      command: find /etc/sysconfig -name clock -exec sed -i 's/UTC/KST/g' {} \; 
+
+    - name: Copy Localtime
+      copy:
+        src: /usr/share/zoneinfo/Asia/Seoul
+        dest: /etc/localtime
