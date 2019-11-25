@@ -1,5 +1,5 @@
 ---
-- hosts: workers
+- hosts: all
   become: true
   tasks:
     - name: docker check

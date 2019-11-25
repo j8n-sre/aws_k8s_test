@@ -1,0 +1,1 @@
+ansible -i workers.ini [master|workers] -m shell -a ['COMMAND']

@@ -1,1 +1,1 @@
-ansible-playbook -i workers.ini pre-install.yml
+ansible-playbook -i nodes.ini pre-install.yml
