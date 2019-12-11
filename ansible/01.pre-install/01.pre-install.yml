@@ -7,17 +7,6 @@
         name: '*'
         state: latest
 
-    - name: Docker Install
-      yum:
-        name: docker
-        state: installed
-
-    - name: Docker Start
-      systemd:
-        state: started
-        name: docker
-        enabled: yes
-
     - name: NTP Install
       yum:
         name: ntp
@@ -44,17 +33,6 @@
       yum:
         name: '*'
         state: latest
-
-    - name: Docker Install
-      yum:
-        name: docker
-        state: installed
-
-    - name: Docker Start
-      systemd:
-        state: started
-        name: docker
-        enabled: yes
 
     - name: NTP Install
       yum:

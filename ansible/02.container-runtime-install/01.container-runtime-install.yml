@@ -1,0 +1,42 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Packages Install
+      yum:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+          - http://vault.centos.org/centos/7.3.1611/extras/x86_64/Packages/container-selinux-2.9-4.el7.noarch.rpm
+        state: present
+
+    - name: ADD Docker Repository
+      command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+    - name: Docker Install
+      yum:
+        name: docker-ce-18.06.2.ce
+        state: installed 
+
+    - name: Create Directory
+      file:
+        path: /etc/docker
+        state: directory
+
+    - name: Create Directory2
+      file:
+        path: /etc/systemd/system/docker.service.d
+        state: directory
+ 
+    - name: Copy daemon.json
+      copy:
+        src: daemon.json
+        dest: /etc/docker/daemon.json
+
+    - name: Docker start
+      systemd:
+        name: docker
+        state: restarted
+        daemon_reload: yes
+        enabled: yes

@@ -1,0 +1,8 @@
+---
+- hosts: master
+  become: true
+  tasks:
+    - name: Yum Update
+      yum:
+        name: '*'
+        state: latest
