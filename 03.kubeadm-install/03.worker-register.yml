@@ -7,4 +7,7 @@
         kubeadm reset -f
         kubeadm token create --print-join-command > token.sh
         sh token.sh
-        
+  
+    - name: Check nods
+      shell: kubectl get nodes
+      register: result

@@ -26,6 +26,11 @@
         src: /usr/share/zoneinfo/Asia/Seoul
         dest: /etc/localtime
 
+    - name: Install firewalld
+      yum:
+        name: firewalld
+        state: installed
+
 - hosts: workers
   become: true
   tasks:
@@ -65,3 +70,8 @@
       copy:
         src: /usr/share/zoneinfo/Asia/Seoul
         dest: /etc/localtime
+
+    - name: Install firewalld
+      yum:
+        name: firewalld
+        state: installed

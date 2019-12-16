@@ -7,9 +7,7 @@
 
     - name: Init kubeadm
     shell: kubeadm init --pod-network-cidr=192.168.0.0/16
-    register: output
-    - debug: msg="{{ output.stdout }}"
-    - debug: msg="{{ output.stderr }}"
+    register: result
 
     - name: Set user enviroment
     file:
@@ -28,6 +26,5 @@
 
   - name: Check pods
     shell: kubectl get pods -n kube-system
-    register: output
-  - debug: msg="{{ output }}"
+    register: result
 
