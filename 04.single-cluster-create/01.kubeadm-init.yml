@@ -3,28 +3,24 @@
   become: true
   tasks:
     - name: Reset kubeadm
-    shell: kubeadm reset -f
+      shell: kubeadm reset -f
 
     - name: Init kubeadm
-    shell: kubeadm init --pod-network-cidr=192.168.0.0/16
-    register: result
+      shell: kubeadm init --pod-network-cidr=192.168.0.0/16
+      register: output
+    - debug: msg="{{ output }}"
 
     - name: Set user enviroment
-    file:
-      path: /root/.kube
-      state: directory
+      file:
+        path: /root/.kube
+        state: directory
     - name: Set user enviroment
-    shell: |
-     cp -i /etc/kubernetes/admin.conf /root/.kube/config
-     chown root:root /root/.kube/config
+      shell: |
+        cp -i /etc/kubernetes/admin.conf /root/.kube/config
+        chown root:root /root/.kube/config
 
-  - name: Install Pod network add-on (Calico)
-    shell: kubectl apply -f https://docs.projectcalico.org/v3.10/manifests/calico.yaml
+    - name: Install Pod network add-on (Calico)
+      shell: kubectl apply -f https://docs.projectcalico.org/v3.10/manifests/calico.yaml
 
-  - name: Set taint (Do not schedule pods)
-    command: kubectl taint nodes --all node-role.kubernetes.io/master-
-
-  - name: Check pods
-    shell: kubectl get pods -n kube-system
-    register: result
-
+    - name: Set taint (Do not schedule pods)
+      command: kubectl taint nodes --all node-role.kubernetes.io/master-

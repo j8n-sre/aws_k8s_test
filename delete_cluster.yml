@@ -1,0 +1,38 @@
+---
+#- hosts: master
+#  become: true
+#  tasks:
+#    - name: Drain worker-node
+#      shell: kubectl drain dev-worker-1 && kubectl drain dev-worker-2
+
+#    - name: Delete worker-node
+#      shell: kubectl delete dev-worker-1 && kubectl delete dev-worker-2
+
+- hosts: all
+  become: true
+  tasks:
+    - name: Reset kubelet
+      shell: kubeadm reset -f
+
+    - name: Stop kube-daemons
+      systemd:
+        name: kubelet
+        state: stopped
+
+    - name: Remove kube-packages
+      yum:
+        name:
+          - kubeadm
+          - kubectl
+          - kubelet
+        state: removed
+
+    - name: Remove files
+      file:
+        path: /etc/yum.repos.d/kubernetes.repo
+        state: absent
+
+    - name: Remove files
+      file:
+        path: /root/.kube/
+        state: absent
