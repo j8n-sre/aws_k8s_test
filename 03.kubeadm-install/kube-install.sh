@@ -52,7 +52,7 @@ sysctl --system
 
 # Install Kubernetes
 echo -e "INSTALL KUBERNETES"
-/usr/bin/yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+yum install -y kubelet=1.16.4-00 kubeadm=1.16.4-00 kubectl=1.16.4-00 --disableexcludes=kubernetes
 
 
 # Start kubelet
