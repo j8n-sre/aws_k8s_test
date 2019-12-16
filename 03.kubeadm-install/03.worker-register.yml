@@ -1,0 +1,10 @@
+---
+- hosts: workers
+  become: true
+  tasks:
+    - name: Create token & Join cluster
+      shell: |
+        kubeadm reset -f
+        kubeadm token create --print-join-command > token.sh
+        sh token.sh
+        
