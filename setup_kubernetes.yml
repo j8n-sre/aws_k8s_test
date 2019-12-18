@@ -1,13 +1,13 @@
 ---
-#- hosts: master
-#  become: true
-#  tasks:
-#    - name: Install Ansible
-#      shell: /root/aws_k8s_test/01.pre-install/00.ansible-install_master.sh
+- hosts: master
+  become: true
+  tasks:
+    - name: Install Ansible
+      shell: /root/aws_k8s_test/01.pre-install/00.ansible-install_master.sh
 
-#- import_playbook: 01.pre-install/01.pre-install.yml
-#- import_playbook: 02.container-runtime-install/01.container-runtime-install.yml
-#- import_playbook: 02.container-runtime-install/02.docker-compose-install.yml
+- import_playbook: 01.pre-install/01.pre-install.yml
+- import_playbook: 02.container-runtime-install/01.container-runtime-install.yml
+- import_playbook: 02.container-runtime-install/02.docker-compose-install.yml
 - import_playbook: 03.kubeadm-install/01.kube-install.yml
 - import_playbook: 04.single-cluster-create/01.kubeadm-init.yml
 - import_playbook: 04.single-cluster-create/02.worker-register.yml
