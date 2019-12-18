@@ -5,8 +5,8 @@
     - name: Drain worker-node
       shell: kubectl drain dev-worker-1 && kubectl drain dev-worker-2
 
-    - name: Delete worker-node
-      shell: kubectl delete dev-worker-1 && kubectl delete dev-worker-2
+#    - name: Delete worker-node
+#      shell: kubectl delete dev-worker-1 && kubectl delete dev-worker-2
 
 - hosts: all
   become: true

@@ -4,7 +4,7 @@
   tasks:
     - name: Create token 
       shell: |
-        kubeadm token create --print-join-command > token.sh
+        kubeadm token create --print-join-command > /root/aws_k8s_test/04.single-cluster-create/token.sh
 
 - hosts: workers
   become: true
