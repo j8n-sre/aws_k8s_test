@@ -16,4 +16,3 @@
 
     - name: Join Cluster
       shell: sh /tmp/token.sh
-      

@@ -4,4 +4,4 @@
 #- import_playbook: 02.container-runtime-install/02.docker-compose-install.yml
 - import_playbook: 03.kubeadm-install/01.kube-install.yml
 - import_playbook: 04.single-cluster-create/01.kubeadm-init.yml
-- import_playbook: 04.single-cluster-create/02.worker-register.yml
+#- import_playbook: 04.single-cluster-create/02.worker-register.yml
