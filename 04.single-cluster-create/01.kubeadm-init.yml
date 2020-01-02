@@ -9,7 +9,7 @@
       shell: kubeadm reset -f
 
     - name: Init kubeadm
-      shell: kubeadm init --config master.yml
+      shell: kubeadm init --config /root/aws_k8s_test/04.single-cluster-create/master.yml
       register: output
     - debug: msg="{{ output }}"
 
@@ -35,4 +35,6 @@
       shell: hostnamectl set-hostname $(curl http://169.254.169.254/latest/meta-data/local-hostname)
 
     - name: Copy worker.yml
-      shell: cp -i /root/aws_k8s_test/04.single-cluster-creater/worker.yml /root/worker.yml
+      copy:
+        src: worker.yml
+        dest: /root/

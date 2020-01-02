@@ -56,7 +56,5 @@
 
     - name: Start kubelet
       shell: |
-        systemctl daemon-reload
-        systemctl restart kubelet
         systemctl enable kubelet
 
