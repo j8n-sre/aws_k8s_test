@@ -6,10 +6,7 @@ networking:
   podSubnet: "192.168.0.0/16"
 apiServer:
   extraArgs:
-    cloud-provider: "aws"
+    cloud-provider: external
 controllerManager:
   extraArgs:
-    cloud-provider: "aws"
-nodeRegistration:
-  kubeletExtraArgs:
-    cloud-provider: "aws"
+    cloud-provider: external

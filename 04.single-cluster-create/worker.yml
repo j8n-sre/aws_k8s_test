@@ -10,4 +10,4 @@ discovery:
 nodeRegistration:
   name: ip-172-31-30-11.ap-northeast-2.compute.internal   # 워커 노드의 Private DNS 이름을 입력
   kubeletExtraArgs:
-    cloud-provider: aws
+    cloud-provider: external
