@@ -1,0 +1,57 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+nodeRegistration:
+  name: "ip-172-31-30-10.ap-northeast-2.compute.internal"
+  criSocket: "/var/run/dockershim.sock"
+  taints:
+  - key: "kubeadmNode"
+    value: "master"
+    effect: "NoSchedule"
+  kubeletExtraArgs:
+    cgroup-driver: "systemd"
+    cloud-provider: "aws"
+  ignorePreflightErrors:
+  - IsPrivilegedUser
+localAPIEndpoint:
+  advertiseAddress: "172.31.30.10"
+  bindPort: 6443
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+etcd:
+  # one of local or external
+  local:
+    imageRepository: "k8s.gcr.io"
+    dataDir: "/var/lib/etcd"
+    extraArgs:
+      listen-client-urls: "http://172.31.30.10:2379"
+networking:
+  serviceSubnet: "10.96.0.0/12"
+  podSubnet: "192.168.0.0/16"
+  dnsDomain: "cluster.local"
+kubernetesVersion: "v1.17.0"
+controlPlaneEndpoint: "172.31.30.10:6443"
+apiServer:
+  extraArgs:
+    authorization-mode: "Node,RBAC"
+    cloud-provider: "aws"
+  timeoutForControlPlane: 4m0s
+controllerManager:
+  extraArgs:
+    cloud-provider: "aws"
+scheduler:
+  extraArgs:
+    address: "172.31.30.10"
+certificatesDir: "/etc/kubernetes/pki"
+imageRepository: "k8s.gcr.io"
+useHyperKubeImage: false
+clusterName: "example-cluster"
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+enableContentionProfiling,omitempty: "0"
+# kubelet specific options here
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+# kube-proxy specific options here
