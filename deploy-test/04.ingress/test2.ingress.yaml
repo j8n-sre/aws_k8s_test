@@ -10,7 +10,6 @@ spec:
   - host: game.ajway.co.kr
     http:
       paths:
-      - path: /2048
-        backend:
+      - backend:
           serviceName: svc-2048
           servicePort: 80
