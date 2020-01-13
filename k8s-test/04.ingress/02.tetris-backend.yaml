@@ -1,32 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "2048-deployment"
+  name: "tetris-deployment"
 spec:
   selector:
     matchLabels:
-      app: "2048"
+      app: "tetris"
   replicas: 2
   template:
     metadata:
       labels:
-        app: "2048"
+        app: "tetris"
     spec:
       containers:
-      - image: alexwhen/docker-2048
+      - image: konradschieban/tetris
         imagePullPolicy: Always
-        name: "2048"
+        name: "tetris"
         ports:
         - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: "svc-2048"
+  name: "svc-tetris"
 spec:
+  type: NodePort
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
   selector:
-    app: "2048"
+    app: "tetris"
