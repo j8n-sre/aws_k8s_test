@@ -1,0 +1,17 @@
+- hosts: master
+  become: true
+  tasks:
+    - name: Git clone Metrics-server
+      shell: git clone https://github.com/kubernetes-sigs/metrics-server.git /root/aws_k8s_test/04.single-cluster-create/metrics-server
+
+    - name: Install Metrics-server
+      shell: kubectl apply -f /root/aws_k8s_test/04.single-cluster-create/metrics-server/deploy/1.8+/
+
+    - name: Add args
+      shell: perl -p -i -e '$.==36 and print "          - --kubelet-insecure-tls=true\n"' /root/aws_k8s_test/04.single-cluster-create/metrics-server/deploy/1.8+/metrics-server-deployment.yaml
+
+    - name: Add args2
+      shell: perl -p -i -e '$.==37 and print "          - --kubelet-preferred-address-types=InternalIP\n"' /root/aws_k8s_test/04.single-cluster-create/metrics-server/deploy/1.8+/metrics-server-deployment.yaml
+
+    - name: Apply metrics-server-deployment.yaml
+      shell: kubectl apply -f /root/aws_k8s_test/04.single-cluster-create/metrics-server/deploy/1.8+/metrics-server-deployment.yaml

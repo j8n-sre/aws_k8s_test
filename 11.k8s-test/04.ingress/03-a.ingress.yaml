@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: 2048.ajway.co.kr
+    http:
+      paths:
+      - backend:
+          serviceName: svc-2048
+          servicePort: 80
+  - host: tetris.ajway.co.kr
+    http:
+      paths:
+      - backend:
+          serviceName: svc-tetris
+          servicePort: 80 

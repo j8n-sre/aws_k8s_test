@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jadeedu-ingress
+#  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: edu.jadecross.com
+    http:
+      paths:
+      - path: /guestbook
+        backend:
+          serviceName: guestbook
+          servicePort: 80
+      - path: /calculator
+        backend:
+          serviceName: calculator
+          servicePort: 80

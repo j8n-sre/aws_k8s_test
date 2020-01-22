@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: game-crt
+spec:
+  secretName: game-crt-secret
+  dnsNames:
+  - 2048.ajway.co.kr
+  - tetris.ajway.co.kr
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

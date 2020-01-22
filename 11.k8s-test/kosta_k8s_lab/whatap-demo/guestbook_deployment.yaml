@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: guestbook
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: guestbook
+      labels:
+        app: guestbook
+    spec:
+      containers:
+      - image: yu3papa/k8s_guestbook:whatap
+        name: springboot
+        env:
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
