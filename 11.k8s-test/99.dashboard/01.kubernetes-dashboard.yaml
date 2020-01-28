@@ -111,10 +111,14 @@ spec:
       - name: kubernetes-dashboard
         image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1
         ports:
-        - containerPort: 8443
+        - containerPort: 9090
           protocol: TCP
         args:
-          - --auto-generate-certificates
+          # - --auto-generate-certificates
+          - --enable-insecure-login
+          - --enable-skip-login
+          - --insecure-bind-address=0.0.0.0
+          - --insecure-port=9090
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
@@ -127,9 +131,9 @@ spec:
           name: tmp-volume
         livenessProbe:
           httpGet:
-            scheme: HTTPS
+            scheme: HTTP
             path: /
-            port: 8443
+            port: 9090
           initialDelaySeconds: 30
           timeoutSeconds: 30
       volumes:
@@ -155,10 +159,10 @@ metadata:
   name: kubernetes-dashboard
   namespace: kube-system
 spec:
-  type: NodePort
   ports:
-    - port: 443
-      targetPort: 8443
-      nodePort: 30001
+    - port: 9090
+      targetPort: 9090
+      nodePort: 30090
   selector:
     k8s-app: kubernetes-dashboard
+  type: NodePort
