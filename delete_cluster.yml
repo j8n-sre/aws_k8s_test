@@ -6,7 +6,7 @@
 #      shell: kubectl drain ip-172-31-30-11.ap-northeast-2.compute.internal && kubectl drain ip-172-31-30-12.ap-northeast-2.compute.internal
 
 #    - name: Delete worker-node
-#      shell: kubectl delete dev-worker-1 && kubectl delete dev-worker-2
+#      shell: kubectl delete node dev-worker-1 && kubectl delete node dev-worker-2
 
 - hosts: all
   become: true
